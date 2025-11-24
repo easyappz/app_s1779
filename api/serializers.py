@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Member, Message
+from api.models import Member, Message, Token
 
 
 class MemberSerializer(serializers.ModelSerializer):
@@ -28,6 +28,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(write_only=True, max_length=150)
     password = serializers.CharField(write_only=True, max_length=128)
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Token
+        fields = ['key', 'created']
+        read_only_fields = ['key', 'created']
 
 
 class MessageSerializer(serializers.ModelSerializer):
