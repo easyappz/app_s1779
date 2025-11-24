@@ -31,20 +31,24 @@ class LoginSerializer(serializers.Serializer):
 
 
 class TokenSerializer(serializers.ModelSerializer):
+    member_id = serializers.IntegerField(source='member.id', read_only=True)
+    username = serializers.CharField(source='member.username', read_only=True)
+    token = serializers.CharField(source='key', read_only=True)
+
     class Meta:
         model = Token
-        fields = ['key', 'created']
-        read_only_fields = ['key', 'created']
+        fields = ['token', 'member_id', 'username']
+        read_only_fields = ['token', 'member_id', 'username']
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    author = MemberSerializer(read_only=True)
-    author_id = serializers.IntegerField(write_only=True, required=False)
+    author_id = serializers.IntegerField(source='author.id', read_only=True)
+    author_username = serializers.CharField(source='author.username', read_only=True)
 
     class Meta:
         model = Message
-        fields = ['id', 'text', 'author', 'author_id', 'created_at']
-        read_only_fields = ['id', 'created_at']
+        fields = ['id', 'text', 'author_id', 'author_username', 'created_at']
+        read_only_fields = ['id', 'author_id', 'author_username', 'created_at']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
