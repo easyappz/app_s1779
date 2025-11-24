@@ -1,0 +1,34 @@
+type: object
+required:
+  - id
+  - text
+  - author_id
+  - created_at
+properties:
+  id:
+    type: integer
+    format: int64
+    example: 1
+    description: Уникальный идентификатор сообщения
+  text:
+    type: string
+    minLength: 1
+    maxLength: 5000
+    example: "Привет всем!"
+    description: Текст сообщения
+  author_id:
+    type: integer
+    format: int64
+    example: 1
+    description: ID автора сообщения
+  author_username:
+    type: string
+    example: "john_doe"
+    description: Логин автора сообщения
+    readOnly: true
+  created_at:
+    type: string
+    format: date-time
+    example: "2025-11-24T07:16:34.508Z"
+    description: Дата и время создания сообщения
+    readOnly: true

@@ -1,0 +1,20 @@
+type: object
+properties:
+  error:
+    type: string
+    example: "Invalid credentials"
+    description: Описание ошибки
+  detail:
+    type: string
+    example: "Username or password is incorrect"
+    description: Детальное описание ошибки
+  field_errors:
+    type: object
+    additionalProperties:
+      type: array
+      items:
+        type: string
+    example:
+      username: ["This field is required"]
+      password: ["This field is required"]
+    description: Ошибки валидации полей

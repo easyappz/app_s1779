@@ -1,0 +1,21 @@
+me:
+  get:
+    summary: Получить информацию о текущем пользователе
+    description: Получение профиля авторизованного пользователя
+    tags:
+      - Members
+    security:
+      - TokenAuth: []
+    responses:
+      '200':
+        description: Информация о пользователе успешно получена
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Member.yml'
+      '401':
+        description: Не авторизован
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Error.yml'

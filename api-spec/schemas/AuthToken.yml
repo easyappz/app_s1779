@@ -1,0 +1,18 @@
+type: object
+required:
+  - token
+  - member_id
+properties:
+  token:
+    type: string
+    example: "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+    description: Токен аутентификации
+  member_id:
+    type: integer
+    format: int64
+    example: 1
+    description: ID пользователя
+  username:
+    type: string
+    example: "john_doe"
+    description: Логин пользователя

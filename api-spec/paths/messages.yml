@@ -1,0 +1,83 @@
+messages:
+  get:
+    summary: Получить список сообщений
+    description: Получение всех сообщений группового чата с пагинацией
+    tags:
+      - Messages
+    security:
+      - TokenAuth: []
+    parameters:
+      - $ref: '../openapi.yml#/components/parameters/limit'
+      - $ref: '../openapi.yml#/components/parameters/offset'
+    responses:
+      '200':
+        description: Список сообщений успешно получен
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                count:
+                  type: integer
+                  example: 100
+                  description: Общее количество сообщений
+                next:
+                  type: string
+                  nullable: true
+                  example: "/api/messages?limit=50&offset=50"
+                  description: Ссылка на следующую страницу
+                previous:
+                  type: string
+                  nullable: true
+                  example: null
+                  description: Ссылка на предыдущую страницу
+                results:
+                  type: array
+                  items:
+                    $ref: '../schemas/Message.yml'
+      '401':
+        description: Не авторизован
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Error.yml'
+  post:
+    summary: Отправить сообщение
+    description: Создание нового сообщения в групповом чате
+    tags:
+      - Messages
+    security:
+      - TokenAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - text
+            properties:
+              text:
+                type: string
+                minLength: 1
+                maxLength: 5000
+                example: "Привет всем!"
+    responses:
+      '201':
+        description: Сообщение успешно создано
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Message.yml'
+      '400':
+        description: Ошибка валидации данных
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Error.yml'
+      '401':
+        description: Не авторизован
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/Error.yml'

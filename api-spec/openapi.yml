@@ -1,0 +1,55 @@
+openapi: 3.1.0
+info:
+  title: Group Chat API
+  version: 1.0.0
+  description: API для группового чата с регистрацией и авторизацией
+servers:
+  - url: /api
+    description: Production server
+paths:
+  /register:
+    $ref: './paths/auth.yml#/register'
+  /login:
+    $ref: './paths/auth.yml#/login'
+  /logout:
+    $ref: './paths/auth.yml#/logout'
+  /messages:
+    $ref: './paths/messages.yml#/messages'
+  /members/me:
+    $ref: './paths/members.yml#/me'
+components:
+  schemas:
+    Member:
+      $ref: './schemas/Member.yml'
+    Message:
+      $ref: './schemas/Message.yml'
+    AuthToken:
+      $ref: './schemas/AuthToken.yml'
+    Error:
+      $ref: './schemas/Error.yml'
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token authentication. Format: Token <token>'
+  parameters:
+    limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 50
+      required: false
+      description: Количество сообщений для получения
+    offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+      required: false
+      description: Смещение для пагинации
